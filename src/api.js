@@ -1,6 +1,6 @@
 const apiUrl = 'http://localhost:3333'
 
-const access = async (username, password, isLogin) => {
+const access = (username, password, isLogin) => {
     const url = apiUrl + (isLogin ? '/user/login' : '/user/register')
     const request = {
         method: 'POST',
@@ -11,12 +11,26 @@ const access = async (username, password, isLogin) => {
         body: JSON.stringify({ username: username, password: password })
     }
 
-    const result = await fetch(url, request)
-    
-    console.log('result', result.status, result.status === 200)
-    console.log(result.body, result.text)
-    if (result.status === 200) return await result.json()
+    return fetch(url, request).then(processResponse)
 
+}
+
+const getCocktails = (token) => {
+    const url = apiUrl + '/cocktail'
+    const request = {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Accept': 'application/json'
+        }
+    }
+
+    return fetch(url, request).then(processResponse)
+}
+
+const processResponse = async (response) => {
+    if (response.status === 200) return await response.json()
     const errorCode = await result.text() ?? unknown
     return { error: errorMessages[errorCode] ?? errorCode }
 }
@@ -29,4 +43,4 @@ const errorMessages = {
     unknown: 'A mysterious error has happened. This should not be possible.'
 }
 
-export default { access }
+export default { access, getCocktails }

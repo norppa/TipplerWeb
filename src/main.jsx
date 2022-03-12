@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import './main.css'
 
 import Access from './components/Access'
+import Tippler from './components/Tippler'
 
 const KEY = '@TipplerToken'
 
@@ -26,7 +27,7 @@ const App = () => {
 
   if (!token) return <Access login={login} />
 
-  return null // <Tippler logout={logout} />
+  return <Tippler logout={logout} token={token} />
 
 }
 

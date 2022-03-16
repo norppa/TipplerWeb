@@ -16,7 +16,7 @@ const Card = ({ id, name, glass, method, garnish, source, info, ingredients }) =
         <img className='glass' src={coupe} alt={glass} />
         <span className='method'>{method}</span>
         <ul className='ingredients'>
-            {ingredients.map(({id, amount, name}) => <li key={`amount-${id}`}>{amount} {name}</li>)}
+            {ingredients.map(({amount, name}) => <li key={`${id}${name}`}>{amount} {name}</li>)}
         </ul>
         <div className='optional'>
             { garnish && <div className='garnish'>{garnish}</div>}
@@ -27,7 +27,7 @@ const Card = ({ id, name, glass, method, garnish, source, info, ingredients }) =
     </div>
 
     return (
-        <div className='Card' cardId={id} onClick={toggle}>
+        <div className='Card' onClick={toggle}>
             {isOpen ? <OpenCard /> : <ClosedCard />}
         </div>
     )
